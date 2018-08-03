@@ -1,5 +1,8 @@
 import hashlib as hasher
 import datetime as date
+from flask import Flask
+from flask import request
+node = Flask(__name__)
 
 class Block: # Defining what a GitCoin consists of
     def __init__(self,index,timeStamp,data,previousHash):
@@ -36,8 +39,18 @@ for i in range(0,blocksToCreate):
     print("Block %s has been added to the blockchain!" % (blockToAdd.index))
     print("Hash: %s\n" % (blockToAdd.hash))  
 
+thisNodesTransactions =[]
 
-
-
+@node.route('/txions', methods = ['POST'])
+def transaction():
+    if request.method == 'POST':  # On each new post request,we extract the transaction data.
+        newTxion = request.get_json()
+        thisNodesTransactions.appennd(newTxion) # We add the transcation to our list
+        print("New transaction")
+        print("FROM: {}".format(new_txion['from'])) # Because the transaction was successfully
+        print("TO: {}".format(new_txion['to']))     # submitted we print it to our console log
+        print("AMOUNT: {}\n".format(new_txion['amount']))
+        return "Transaction submission successfull!\n"  # We let the client know it worked
+node.run()
 
 
